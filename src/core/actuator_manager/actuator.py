@@ -2,6 +2,7 @@ from typing import Any, Dict
 
 from src.core.device_manager.device import Device
 from src.common.interfaces.actuator_plugin_interface import ActuatorPluginInterface
+from src.common.property_manager.property import Property
 
 
 class Actuator(Device):
@@ -25,10 +26,34 @@ class Actuator(Device):
             model=model,
             attributes=attributes,
         )
-        self.instance_plugin()
 
-    def instance_plugin(self):
+        self.on_value = None
+        self.off_value = None
+        self.power_property: Property | None = None
+
+        self._instance_plugin()
+
+    @property
+    def states(self):
+        return {"power_state": self._power_state()}
+
+    def _instance_plugin(self):
         self.plugin: ActuatorPluginInterface = self.plugin_class(**self.attributes)
+        self.on_value = self.plugin._get_on_value()
+        self.off_value = self.plugin._get_off_value()
+        self.power_property = self.plugin._get_power_property()
+
+    def _power_state(self):
+        if self.power_property is None:
+            return "unknown"
+
+        if self.on_value == self.power_property.get_value():
+            return "on"
+
+        if self.off_value == self.power_property.get_value():
+            return "off"
+
+        return "unknown"
 
     def on(self):
         self.plugin.on_operation()
