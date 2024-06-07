@@ -76,5 +76,10 @@ class PluginLoader:
     def get_plugin_by_class_name(self, plugin_class_name: str) -> Plugin:
         return self.plugins_class_index.get(plugin_class_name)
 
-    def get_plugins_by_type(self, plugin_type: str) -> List[Plugin]:
+    def get_plugins_by_interface_type(self, plugin_type: str) -> List[Plugin]:
         return self.plugins_type_index.get(plugin_type)
+
+    def get_plugin_names_by_interface_name(self, interface_name: str) -> List[str]:
+        return [
+            plugin.class_name for plugin in self.plugins_type_index.get(interface_name)
+        ]
