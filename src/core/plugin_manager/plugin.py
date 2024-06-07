@@ -24,7 +24,7 @@ class Plugin:
                     if param.annotation != inspect._empty
                     else "Unknown"
                 )
-                params[name] = param_type
+                params[name] = param_type.__name__
 
         return params
 

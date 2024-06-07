@@ -21,3 +21,9 @@ class PluginService:
             )
         )
         return plugins
+
+    def get_plugin_configuration_params(self, plugin_name: str):
+        plugin = self.equipment_control.plugin_loader.get_plugin_by_class_name(
+            plugin_name
+        )
+        return plugin.params
