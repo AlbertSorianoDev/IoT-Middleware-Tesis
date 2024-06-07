@@ -3,7 +3,7 @@ from uuid import UUID
 
 from src.core.plugin_manager.plugin_loader import PluginLoader
 from src.core.utils.singleton import SingletonMeta
-from src.core.device_manager.equipment import Equipment
+from src.core.device_manager.equipment import Equipment, Device
 from src.core.actuator_manager.actuator import Actuator
 from src.core.actuator_manager.actuator_factory import ActuatorFactory
 
@@ -16,7 +16,7 @@ class EquipmentControl(metaclass=SingletonMeta):
     def __init__(self, plugin_path: str = ""):
         self.equipments_index: Dict[UUID, Equipment] = {}
         # self.sensors_index: Dict[UUID, Device] = {}
-        self.actuators_index: Dict[UUID, Actuator] = {}
+        self.devices_index: Dict[UUID, Device] = {}
 
         self.plugin_loader = PluginLoader(plugin_path)
         self.actuator_factory = ActuatorFactory()
@@ -38,7 +38,7 @@ class EquipmentControl(metaclass=SingletonMeta):
         brand: str = None,
         model: str = None,
         attributes: Dict[str, Any] = None,
-    ):
+    ) -> Actuator:
         equipment = self.equipments_index.get(equipment_id)
 
         if not equipment:
@@ -60,7 +60,12 @@ class EquipmentControl(metaclass=SingletonMeta):
         )
 
         equipment.add_device(new_actuator)
-        self.actuators_index[new_actuator.id] = new_actuator
+        self.devices_index[new_actuator.id] = new_actuator
+
+        return new_actuator
 
     def get_equipment_by_id(self, equipment_id: UUID):
         return self.equipments_index.get(equipment_id)
+
+    def get_device_by_id(self, device_id: UUID):
+        return self.devices_index.get(device_id)
