@@ -15,7 +15,7 @@ class Switch(Actuator):
         plugin_class: SwitchPluginInterface,
         brand: str = None,
         model: str = None,
-        attributes: Dict[str, Any] = None,
+        config_params: Dict[str, Any] = None,
     ):
         super().__init__(
             label=label,
@@ -23,5 +23,5 @@ class Switch(Actuator):
             plugin_class=plugin_class,
             brand=brand,
             model=model,
-            attributes=attributes,
+            config_params=config_params,
         )

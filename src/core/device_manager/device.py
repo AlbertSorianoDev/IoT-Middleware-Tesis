@@ -14,7 +14,7 @@ class Device:
         plugin_class: ActuatorPluginInterface,
         brand: str = None,
         model: str = None,
-        attributes: Dict[str, str] = None,
+        config_params: Dict[str, str] = None,
     ):
         self.id: UUID = uuid4()
         self.label: str = label
@@ -23,7 +23,7 @@ class Device:
         self.model: str = model
         self.connection_status: ConnectionStatus = ConnectionStatus.UNKNOWN
         self.plugin_class = plugin_class
-        self.attributes: Dict[str, str] = attributes
+        self.config_params: Dict[str, str] = config_params
 
     def to_dict(self):
         return {
@@ -34,5 +34,5 @@ class Device:
             "model": self.model,
             "connection_status": self.connection_status.name,
             "plugin_class_name": self.plugin_class.__name__,
-            "attributes": self.attributes,
+            "config_params": self.config_params,
         }

@@ -16,7 +16,7 @@ class Actuator(Device):
         plugin_class: ActuatorPluginInterface,
         brand: str = None,
         model: str = None,
-        attributes: Dict[str, Any] = None,
+        config_params: Dict[str, Any] = None,
     ):
         super().__init__(
             label=label,
@@ -24,7 +24,7 @@ class Actuator(Device):
             plugin_class=plugin_class,
             brand=brand,
             model=model,
-            attributes=attributes,
+            config_params=config_params,
         )
 
         self.on_value = None
@@ -38,7 +38,7 @@ class Actuator(Device):
         return {"power_state": self._power_state()}
 
     def _instance_plugin(self):
-        self.plugin: ActuatorPluginInterface = self.plugin_class(**self.attributes)
+        self.plugin: ActuatorPluginInterface = self.plugin_class(**self.config_params)
         self.on_value = self.plugin._get_on_value()
         self.off_value = self.plugin._get_off_value()
         self.power_property = self.plugin._get_power_property()

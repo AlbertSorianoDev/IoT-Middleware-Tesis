@@ -11,4 +11,4 @@ class ActuatorCreatingSchema(BaseModel):
     plugin_class_name: str
     brand: Optional[str]
     model: Optional[str]
-    attributes: Optional[Dict[str, str]]
+    config_params: Optional[Dict[str, str]]

@@ -17,7 +17,7 @@ class ActuatorFactory:
         plugin_class: ActuatorPluginInterface,
         brand: str = None,
         model: str = None,
-        attributes: Dict[str, Any] = None,
+        config_params: Dict[str, Any] = None,
     ):
         if actuator_type in self.actuator_classes:
             return self.actuator_classes[actuator_type](
@@ -26,7 +26,7 @@ class ActuatorFactory:
                 plugin_class=plugin_class,
                 brand=brand,
                 model=model,
-                attributes=attributes,
+                config_params=config_params,
             )
         else:
             raise ValueError(f"Actuator type '{actuator_type}' not recognized.")

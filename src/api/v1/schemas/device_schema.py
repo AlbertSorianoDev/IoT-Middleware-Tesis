@@ -10,4 +10,4 @@ class DeviceSchema(BaseModel):
     model: Optional[str]
     connection_status: str
     plugin_class_name: str
-    attributes: Optional[Dict[str, str]]
+    config_params: Optional[Dict[str, str]]

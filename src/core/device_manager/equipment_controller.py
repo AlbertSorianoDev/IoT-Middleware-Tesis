@@ -37,7 +37,7 @@ class EquipmentController(metaclass=SingletonMeta):
         plugin_class_name: str,
         brand: str = None,
         model: str = None,
-        attributes: Dict[str, Any] = None,
+        config_params: Dict[str, Any] = None,
     ) -> Actuator:
         equipment = self.equipments_index.get(equipment_id)
 
@@ -56,7 +56,7 @@ class EquipmentController(metaclass=SingletonMeta):
             plugin_class=plugin.cls,
             brand=brand,
             model=model,
-            attributes=attributes,
+            config_params=config_params,
         )
 
         equipment.add_device(new_actuator)
