@@ -30,6 +30,13 @@ class DeviceRouter:
 
         return JSONResponse(content=devices_data, status_code=200)
 
+    @device_router.get("/actuator/types", response_model=List[str])
+    async def get_actuator_types():
+        service = DeviceService()
+        actuator_types = service.get_actuator_types()
+
+        return JSONResponse(content=actuator_types, status_code=200)
+
     @device_router.post("/actuator", response_model=DeviceSchema | None)
     async def create_actuator(
         actuator_create: ActuatorCreatingSchema,

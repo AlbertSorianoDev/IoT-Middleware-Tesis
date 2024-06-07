@@ -26,6 +26,9 @@ class DeviceService:
 
         return [actuator.to_dict() for actuator in actuators]
 
+    def get_actuator_types(self) -> List[str]:
+        return list(self.equipment_control.actuator_factory.actuator_classes.keys())
+
     def create_actuator(
         self,
         actuator_create: ActuatorCreatingSchema,
