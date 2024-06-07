@@ -5,7 +5,7 @@ from pkgutil import walk_packages
 from importlib import import_module
 
 from src.api.v1.api_v1 import APIV1
-from src.core.device_manager.equipment_control import EquipmentControl
+from src.core.device_manager.equipment_controller import EquipmentController
 
 
 class Application:
@@ -25,7 +25,7 @@ class Application:
         self.pre_import_modules("src")
 
         # Device Manager Initialization
-        self.equipment_control = EquipmentControl("./plugins")
+        self.equipment_control = EquipmentController("./plugins")
 
         # FastAPI Configuration
         self.app.title = "IoT Middleware Suite Service"

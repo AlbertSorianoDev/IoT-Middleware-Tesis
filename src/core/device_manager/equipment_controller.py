@@ -12,7 +12,7 @@ from src.core.actuator_manager.actuator_factory import ActuatorFactory
 # Aplicar el diseño de builder para la clase actuador y sensor
 
 
-class EquipmentControl(metaclass=SingletonMeta):
+class EquipmentController(metaclass=SingletonMeta):
     def __init__(self, plugin_path: str = ""):
         self.equipments_index: Dict[UUID, Equipment] = {}
         # self.sensors_index: Dict[UUID, Device] = {}

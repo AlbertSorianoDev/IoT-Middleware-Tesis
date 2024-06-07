@@ -1,14 +1,14 @@
 from uuid import UUID
 from typing import List
 
-from src.core.device_manager.equipment_control import EquipmentControl
+from src.core.device_manager.equipment_controller import EquipmentController
 from src.api.v1.schemas.device_schema import DeviceSchema
 from src.api.v1.schemas.actuator_creating_schema import ActuatorCreatingSchema
 
 
 class DeviceService:
     def __init__(self) -> None:
-        self.equipment_control = EquipmentControl()
+        self.equipment_control = EquipmentController()
 
     def get_device_by_id(self, actuator_id: UUID) -> DeviceSchema | None:
         actuator = self.equipment_control.get_device_by_id(actuator_id)

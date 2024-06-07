@@ -1,13 +1,13 @@
 from typing import List
 
-from src.core.device_manager.equipment_control import EquipmentControl
+from src.core.device_manager.equipment_controller import EquipmentController
 from src.api.v1.schemas.equipment_schema import EquipmentSchema
 from src.api.v1.schemas.equipment_creating_schema import EquipmentCreatingSchema
 
 
 class EquipmentService:
     def __init__(self):
-        self.equipment_control = EquipmentControl()
+        self.equipment_control = EquipmentController()
 
     def get_equipment_by_id(self, equipment_id: int) -> EquipmentSchema | None:
         equipment = self.equipment_control.get_equipment_by_id(equipment_id)
