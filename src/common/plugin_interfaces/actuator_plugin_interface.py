@@ -21,9 +21,9 @@ class ActuatorPluginInterface(ABC):
         pass
 
     @abstractmethod
-    def on_operation(self):
+    def on(self):
         pass
 
     @abstractmethod
-    def off_operation(self):
+    def off(self):
         pass

@@ -1,4 +1,4 @@
-from src.common.interfaces.switch_plugin_interface import SwitchPluginInterface
+from src.common.plugin_interfaces.switch_plugin_interface import SwitchPluginInterface
 from src.common.property_manager.property import Property
 from src.common.property_manager.text_data import TextData
 
@@ -25,8 +25,8 @@ class MQTTSwitch(SwitchPluginInterface):
     def _get_off_value(self):
         return self.off_value
 
-    def on_operation(self):
+    def on(self):
         print("MQTT Switch on operation")
 
-    def off_operation(self):
+    def off(self):
         print("MQTT Switch off operation")

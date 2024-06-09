@@ -2,7 +2,9 @@ from uuid import UUID, uuid4
 from typing import Dict
 
 from src.core.device_manager.connection_status import ConnectionStatus
-from src.common.interfaces.actuator_plugin_interface import ActuatorPluginInterface
+from src.common.plugin_interfaces.actuator_plugin_interface import (
+    ActuatorPluginInterface,
+)
 
 
 class Device:

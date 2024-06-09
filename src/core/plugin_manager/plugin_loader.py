@@ -33,7 +33,7 @@ class PluginLoader:
 
     def _inicialize_plugins_type_index(self):
         for actuator_subclass in Actuator.__subclasses__():
-            self.plugin_interfaces.append(actuator_subclass.plugin_interface)
+            self.plugin_interfaces.append(actuator_subclass.PLUGIN_INTERFACE)
 
         for plugin_class in self.plugin_interfaces:
             self.plugins_type_index[plugin_class.__name__] = []

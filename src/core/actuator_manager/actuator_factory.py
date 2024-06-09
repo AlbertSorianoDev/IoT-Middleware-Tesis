@@ -1,7 +1,9 @@
 from typing import Dict, Any
 
 from src.core.actuator_manager.actuator import Actuator
-from src.common.interfaces.actuator_plugin_interface import ActuatorPluginInterface
+from src.common.plugin_interfaces.actuator_plugin_interface import (
+    ActuatorPluginInterface,
+)
 
 
 class ActuatorFactory:

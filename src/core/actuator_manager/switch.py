@@ -1,11 +1,11 @@
 from typing import Any, Dict
 
 from src.core.actuator_manager.actuator import Actuator
-from src.common.interfaces.switch_plugin_interface import SwitchPluginInterface
+from src.common.plugin_interfaces.switch_plugin_interface import SwitchPluginInterface
 
 
 class Switch(Actuator):
-    plugin_interface = SwitchPluginInterface
+    PLUGIN_INTERFACE = SwitchPluginInterface
 
     def __init__(
         self,
