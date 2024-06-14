@@ -1,9 +1,10 @@
 from uuid import UUID
-from typing import List
+from typing import List, Dict, Any
 
 from src.core.device_manager.equipment_controller import EquipmentController
 from src.api.v1.schemas.device_schema import DeviceSchema
 from src.api.v1.schemas.actuator_creating_schema import ActuatorCreatingSchema
+from src.api.v1.schemas.operation_schema import OperationSchema
 
 
 class DeviceService:
@@ -41,3 +42,15 @@ class DeviceService:
             return actuator.to_dict()
 
         return None
+
+    def get_operations_by_actuator_type(
+        self, actuator_type: str
+    ) -> Dict[str, Dict[str, str]] | None:
+        return self.equipment_control.get_operations_by_actuator_type(actuator_type)
+
+    def do_an_operation_by_actuator_id(self, operation_data: OperationSchema) -> bool:
+        operation_result = self.equipment_control.do_an_operation_by_actuator_id(
+            **operation_data.model_dump()
+        )
+
+        return operation_result

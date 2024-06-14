@@ -1,11 +1,12 @@
 from fastapi import APIRouter
 from fastapi.responses import JSONResponse
 from uuid import UUID
-from typing import List
+from typing import List, Dict
 
 from src.api.v1.services.device_service import DeviceService
 from src.api.v1.schemas.device_schema import DeviceSchema
 from src.api.v1.schemas.actuator_creating_schema import ActuatorCreatingSchema
+from src.api.v1.schemas.operation_schema import OperationSchema
 
 
 class DeviceRouter:
@@ -49,4 +50,36 @@ class DeviceRouter:
         else:
             return JSONResponse(
                 content={"message": "Error creating actuator"}, status_code=500
+            )
+
+    @device_router.get(
+        "/actuator/{actuator_type}/operations", response_model=Dict[str, Dict[str, str]]
+    )
+    async def get_operations_by_actuator_type(actuator_type: str):
+        service = DeviceService()
+        actuator_operations_data = service.get_operations_by_actuator_type(
+            actuator_type
+        )
+
+        if actuator_operations_data:
+            return JSONResponse(content=actuator_operations_data, status_code=200)
+        else:
+            return JSONResponse(
+                content={"message": "Actuator not found"}, status_code=404
+            )
+
+    @device_router.post(
+        "/actuator/{actuator_id}/operate", response_model=Dict[str, str]
+    )
+    async def do_an_operation_by_actuator_id(operation_data: OperationSchema):
+        service = DeviceService()
+        operation_result = service.do_an_operation_by_actuator_id(operation_data)
+
+        if operation_result:
+            return JSONResponse(
+                content={"operation_realice": operation_result}, status_code=200
+            )
+        else:
+            return JSONResponse(
+                content={"message": "Error doing operation"}, status_code=500
             )

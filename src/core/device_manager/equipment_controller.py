@@ -1,3 +1,4 @@
+import inspect
 from typing import Dict, Any
 from uuid import UUID
 
@@ -69,3 +70,53 @@ class EquipmentController(metaclass=SingletonMeta):
 
     def get_device_by_id(self, device_id: UUID):
         return self.devices_index.get(device_id)
+
+    def get_operations_by_actuator_type(self, actuator_type: str):
+        actuator_cls = self.actuator_factory.actuator_classes.get(actuator_type)
+
+        if actuator_cls:
+            exclude_methods = {"to_dict", "states_info", "PLUGIN_INTERFACE"}
+            methods_info = {}
+
+            for method_name in dir(actuator_cls):
+
+                if (
+                    callable(getattr(actuator_cls, method_name))
+                    and not method_name.startswith("_")
+                    and method_name not in exclude_methods
+                ):
+                    method = getattr(actuator_cls, method_name)
+                    sig = inspect.signature(method)
+
+                    params = {}
+
+                    for name, param in sig.parameters.items():
+                        if name != "self":
+                            param_type = (
+                                param.annotation
+                                if param.annotation != inspect._empty
+                                else "Unknown"
+                            )
+                            params[name] = param_type.__name__
+
+                    methods_info[method_name] = params
+
+            return methods_info
+
+        return None
+
+    def do_an_operation_by_actuator_id(
+        self, device_id: UUID, operation: str, operation_params: Dict[str, str]
+    ) -> bool:
+        actuator = self.devices_index.get(device_id)
+
+        if not actuator or not issubclass(actuator.__class__, Actuator):
+            return False
+
+        method = getattr(actuator, operation)
+
+        if method is not None and callable(method):
+            method(**operation_params)
+            return True
+
+        return False
