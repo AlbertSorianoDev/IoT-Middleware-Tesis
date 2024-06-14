@@ -8,19 +8,24 @@ from src.core.device_managment.equipment import Equipment, Device
 from src.core.actuator_managment.actuator import Actuator
 from src.core.actuator_managment.actuator_factory import ActuatorFactory
 
-# al crear device se debe separar actuador de sensor
-# Aplicar el diseño de fábrica para los actuadores específicos como switch, etc.
-# Aplicar el diseño de builder para la clase actuador y sensor
-
 
 class EquipmentController(metaclass=SingletonMeta):
-    def __init__(self, plugin_path: str = ""):
+    def __init__(self):
         self.equipments_index: Dict[UUID, Equipment] = {}
-        # self.sensors_index: Dict[UUID, Device] = {}
         self.devices_index: Dict[UUID, Device] = {}
 
-        self.plugin_loader = PluginController(plugin_path)
+        self.plugin_controller = None
         self.actuator_factory = ActuatorFactory()
+
+    @property
+    def plugin_controller(self):
+        if self._plugin_controller is None:
+            self._plugin_controller = PluginController()
+        return self._plugin_controller
+
+    @plugin_controller.setter
+    def plugin_controller(self, value):
+        self._plugin_controller = value
 
     def create_equipment(self, label: str, description: str):
         new_equipement = Equipment(label=label, description=description)
@@ -45,7 +50,7 @@ class EquipmentController(metaclass=SingletonMeta):
         if not equipment:
             raise ValueError(f"Equipment {equipment_id} not found")
 
-        plugin = self.plugin_loader.get_plugin_by_class_name(plugin_class_name)
+        plugin = self.plugin_controller.get_plugin_by_class_name(plugin_class_name)
 
         if not plugin:
             raise ValueError(f"Plugin {plugin_class_name} not found")

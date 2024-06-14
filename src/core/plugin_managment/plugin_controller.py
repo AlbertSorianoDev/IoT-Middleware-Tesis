@@ -4,10 +4,11 @@ import importlib.util
 from typing import List, Dict
 
 from src.core.plugin_managment.plugin import Plugin
-from src.core.actuator_managment.actuator import Actuator
+from src.core.actuator_managment.actuator_factory import ActuatorFactory
+from src.core.utils.singleton import SingletonMeta
 
 
-class PluginController:
+class PluginController(metaclass=SingletonMeta):
     def __init__(self, plugin_path: str) -> None:
         self.plugins_type_index: Dict[str, List[Plugin]] = {}
         self.plugins_class_index: Dict[str, Plugin] = {}
@@ -16,6 +17,8 @@ class PluginController:
 
         self.plugins_folder: str = plugin_path
         self.plugins_root_module = self._convert_path_to_module(self.plugins_folder)
+
+        self.actuator_factory = ActuatorFactory()
 
         self._inicialize_plugins_type_index()
         self.load_plugins()
@@ -32,7 +35,8 @@ class PluginController:
         return module_path
 
     def _inicialize_plugins_type_index(self):
-        for actuator_subclass in Actuator.__subclasses__():
+
+        for actuator_subclass in self.actuator_factory.actuator_classes.values():
             self.plugin_interfaces.append(actuator_subclass.PLUGIN_INTERFACE)
 
         for plugin_class in self.plugin_interfaces:

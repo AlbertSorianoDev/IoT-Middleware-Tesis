@@ -6,6 +6,7 @@ from importlib import import_module
 
 from src.core.service_gateway.api.api_v1 import APIV1
 from src.core.device_managment.equipment_controller import EquipmentController
+from src.core.plugin_managment.plugin_controller import PluginController
 
 
 class LifeCicle:
@@ -25,7 +26,8 @@ class LifeCicle:
         self.pre_import_modules("src")
 
         # Device Manager Initialization
-        self.equipment_control = EquipmentController("./plugins")
+        self.plugin_controller = PluginController("./plugins")
+        self.equipment_control = EquipmentController()
 
         # FastAPI Configuration
         self.app.title = "IoT Middleware Suite Service"
