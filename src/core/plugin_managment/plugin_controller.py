@@ -7,7 +7,7 @@ from src.core.plugin_managment.plugin import Plugin
 from src.core.actuator_managment.actuator import Actuator
 
 
-class PluginLoader:
+class PluginController:
     def __init__(self, plugin_path: str) -> None:
         self.plugins_type_index: Dict[str, List[Plugin]] = {}
         self.plugins_class_index: Dict[str, Plugin] = {}

@@ -2,7 +2,7 @@ import inspect
 from typing import Dict, Any
 from uuid import UUID
 
-from src.core.plugin_managment.plugin_loader import PluginLoader
+from src.core.plugin_managment.plugin_controller import PluginController
 from src.core.utils.singleton import SingletonMeta
 from src.core.device_managment.equipment import Equipment, Device
 from src.core.actuator_managment.actuator import Actuator
@@ -19,7 +19,7 @@ class EquipmentController(metaclass=SingletonMeta):
         # self.sensors_index: Dict[UUID, Device] = {}
         self.devices_index: Dict[UUID, Device] = {}
 
-        self.plugin_loader = PluginLoader(plugin_path)
+        self.plugin_loader = PluginController(plugin_path)
         self.actuator_factory = ActuatorFactory()
 
     def create_equipment(self, label: str, description: str):
