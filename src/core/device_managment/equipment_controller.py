@@ -2,7 +2,7 @@ import inspect
 from typing import Dict, Any
 from uuid import UUID
 
-from src.core.plugin_manager.plugin_loader import PluginLoader
+from src.core.plugin_managment.plugin_loader import PluginLoader
 from src.core.utils.singleton import SingletonMeta
 from src.core.device_managment.equipment import Equipment, Device
 from src.core.actuator_managment.actuator import Actuator
