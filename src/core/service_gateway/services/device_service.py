@@ -2,11 +2,11 @@ from uuid import UUID
 from typing import List, Dict, Any
 
 from src.core.device_managment.equipment_controller import EquipmentController
-from src.core.service_gateway.v1.schemas.device_schema import DeviceSchema
-from src.core.service_gateway.v1.schemas.actuator_creating_schema import (
+from src.core.service_gateway.api.schemas.device_schema import DeviceSchema
+from src.core.service_gateway.api.schemas.actuator_creating_schema import (
     ActuatorCreatingSchema,
 )
-from src.core.service_gateway.v1.schemas.operation_schema import OperationSchema
+from src.core.service_gateway.api.schemas.operation_schema import OperationSchema
 
 
 class DeviceService:

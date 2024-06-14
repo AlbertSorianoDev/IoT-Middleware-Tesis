@@ -4,11 +4,11 @@ from uuid import UUID
 from typing import List, Dict
 
 from src.core.service_gateway.services.device_service import DeviceService
-from src.core.service_gateway.v1.schemas.device_schema import DeviceSchema
-from src.core.service_gateway.v1.schemas.actuator_creating_schema import (
+from src.core.service_gateway.api.schemas.device_schema import DeviceSchema
+from src.core.service_gateway.api.schemas.actuator_creating_schema import (
     ActuatorCreatingSchema,
 )
-from src.core.service_gateway.v1.schemas.operation_schema import OperationSchema
+from src.core.service_gateway.api.schemas.operation_schema import OperationSchema
 
 
 class DeviceRouter:

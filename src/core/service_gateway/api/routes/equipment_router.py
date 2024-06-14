@@ -4,8 +4,8 @@ from uuid import UUID
 from typing import List
 
 from src.core.service_gateway.services.equipment_service import EquipmentService
-from src.core.service_gateway.v1.schemas.equipment_schema import EquipmentSchema
-from src.core.service_gateway.v1.schemas.equipment_creating_schema import (
+from src.core.service_gateway.api.schemas.equipment_schema import EquipmentSchema
+from src.core.service_gateway.api.schemas.equipment_creating_schema import (
     EquipmentCreatingSchema,
 )
 
