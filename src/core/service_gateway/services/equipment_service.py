@@ -1,6 +1,6 @@
 from typing import List
 
-from src.core.device_managment.equipment_controller import EquipmentController
+from src.core.device_management.equipment_controller import EquipmentController
 from src.core.service_gateway.api.schemas.equipment_schema import EquipmentSchema
 from src.core.service_gateway.api.schemas.equipment_creating_schema import (
     EquipmentCreatingSchema,

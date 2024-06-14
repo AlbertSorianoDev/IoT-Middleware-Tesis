@@ -1,6 +1,6 @@
 from typing import Dict, List
 
-from src.core.plugin_managment.plugin_controller import PluginController
+from src.core.plugin_management.plugin_controller import PluginController
 
 
 class PluginService:

@@ -2,11 +2,11 @@ import inspect
 from typing import Dict, Any
 from uuid import UUID
 
-from src.core.plugin_managment.plugin_controller import PluginController
+from src.core.plugin_management.plugin_controller import PluginController
 from src.core.utils.singleton import SingletonMeta
-from src.core.device_managment.equipment import Equipment, Device
-from src.core.actuator_managment.actuator import Actuator
-from src.core.actuator_managment.actuator_factory import ActuatorFactory
+from src.core.device_management.equipment import Equipment, Device
+from src.core.actuator_management.actuator import Actuator
+from src.core.actuator_management.actuator_factory import ActuatorFactory
 
 
 class EquipmentController(metaclass=SingletonMeta):

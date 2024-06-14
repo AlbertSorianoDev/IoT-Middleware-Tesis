@@ -1,6 +1,6 @@
-from src.core.application_managment.life_cicle import LifeCicle
+from src.core.application_management.life_cycle import LifeCycle
 
-app = LifeCicle().app
+app = LifeCycle().app
 
 if __name__ == "__main__":
     import uvicorn

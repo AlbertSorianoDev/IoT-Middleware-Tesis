@@ -5,11 +5,11 @@ from pkgutil import walk_packages
 from importlib import import_module
 
 from src.core.service_gateway.api.api_v1 import APIV1
-from src.core.device_managment.equipment_controller import EquipmentController
-from src.core.plugin_managment.plugin_controller import PluginController
+from src.core.device_management.equipment_controller import EquipmentController
+from src.core.plugin_management.plugin_controller import PluginController
 
 
-class LifeCicle:
+class LifeCycle:
 
     tags_metadata = [
         {

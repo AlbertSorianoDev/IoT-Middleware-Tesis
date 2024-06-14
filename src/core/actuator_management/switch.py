@@ -1,6 +1,6 @@
 from typing import Any, Dict
 
-from src.core.actuator_managment.actuator import Actuator
+from src.core.actuator_management.actuator import Actuator
 from src.common.plugin_interfaces.switch_plugin_interface import SwitchPluginInterface
 
 

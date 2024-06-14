@@ -1,6 +1,6 @@
 from uuid import UUID
 
-from src.core.device_managment.device import Device
+from src.core.device_management.device import Device
 
 
 class Sensor(Device):
