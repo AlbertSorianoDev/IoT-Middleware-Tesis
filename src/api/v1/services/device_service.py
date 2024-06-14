@@ -1,7 +1,7 @@
 from uuid import UUID
 from typing import List, Dict, Any
 
-from src.core.device_manager.equipment_controller import EquipmentController
+from src.core.device_managment.equipment_controller import EquipmentController
 from src.api.v1.schemas.device_schema import DeviceSchema
 from src.api.v1.schemas.actuator_creating_schema import ActuatorCreatingSchema
 from src.api.v1.schemas.operation_schema import OperationSchema

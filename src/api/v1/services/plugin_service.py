@@ -1,6 +1,6 @@
 from typing import Dict, List
 
-from src.core.device_manager.equipment_controller import EquipmentController
+from src.core.device_managment.equipment_controller import EquipmentController
 
 
 class PluginService:

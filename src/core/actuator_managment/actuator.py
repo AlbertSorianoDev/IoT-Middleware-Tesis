@@ -1,6 +1,6 @@
 from typing import Any, Dict
 
-from src.core.device_manager.device import Device
+from src.core.device_managment.device import Device
 from src.common.plugin_interfaces.actuator_plugin_interface import (
     ActuatorPluginInterface,
 )

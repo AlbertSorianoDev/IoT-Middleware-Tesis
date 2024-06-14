@@ -1,7 +1,7 @@
 from uuid import UUID, uuid4
 from typing import List
 
-from src.core.device_manager.device import Device
+from src.core.device_managment.device import Device
 
 
 class Equipment:
