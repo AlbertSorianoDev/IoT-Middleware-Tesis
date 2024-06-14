@@ -28,10 +28,10 @@ class EquipmentController(metaclass=SingletonMeta):
         self._plugin_controller = value
 
     def create_equipment(self, label: str, description: str):
-        new_equipement = Equipment(label=label, description=description)
-        self.equipments_index[new_equipement.id] = new_equipement
+        new_equipment = Equipment(label=label, description=description)
+        self.equipments_index[new_equipment.id] = new_equipment
 
-        return new_equipement
+        return new_equipment
 
     def create_actuator(
         self,
