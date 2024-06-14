@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 
-from src.common.property_manager.property import Property
+from src.common.property_managment.property import Property
 
 
 class ActuatorPluginInterface(ABC):

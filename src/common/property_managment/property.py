@@ -1,6 +1,6 @@
 from typing import List
 
-from src.common.property_manager.data_type import DataType
+from src.common.property_managment.data_type import DataType
 
 
 class Property:

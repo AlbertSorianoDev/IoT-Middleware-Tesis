@@ -1,6 +1,6 @@
 from src.common.plugin_interfaces.switch_plugin_interface import SwitchPluginInterface
-from src.common.property_manager.property import Property
-from src.common.property_manager.text_data import TextData
+from src.common.property_managment.property import Property
+from src.common.property_managment.text_data import TextData
 
 
 class MQTTSwitch(SwitchPluginInterface):

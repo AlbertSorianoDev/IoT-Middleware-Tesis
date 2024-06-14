@@ -4,7 +4,7 @@ from src.core.device_managment.device import Device
 from src.common.plugin_interfaces.actuator_plugin_interface import (
     ActuatorPluginInterface,
 )
-from src.common.property_manager.property import Property
+from src.common.property_managment.property import Property
 
 
 class Actuator(Device):
