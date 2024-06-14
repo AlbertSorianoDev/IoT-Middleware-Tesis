@@ -8,7 +8,7 @@ from src.api.v1.api_v1 import APIV1
 from src.core.device_managment.equipment_controller import EquipmentController
 
 
-class Application:
+class LifeCicle:
 
     tags_metadata = [
         {
