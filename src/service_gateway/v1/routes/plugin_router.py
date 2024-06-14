@@ -2,7 +2,7 @@ from fastapi import APIRouter
 from fastapi.responses import JSONResponse
 from typing import List, Dict
 
-from src.api.v1.services.plugin_service import PluginService
+from src.core.service_gateway.v1.services.plugin_service import PluginService
 
 
 class PluginRouter:

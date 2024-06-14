@@ -3,10 +3,12 @@ from fastapi.responses import JSONResponse
 from uuid import UUID
 from typing import List, Dict
 
-from src.api.v1.services.device_service import DeviceService
-from src.api.v1.schemas.device_schema import DeviceSchema
-from src.api.v1.schemas.actuator_creating_schema import ActuatorCreatingSchema
-from src.api.v1.schemas.operation_schema import OperationSchema
+from src.core.service_gateway.v1.services.device_service import DeviceService
+from src.core.service_gateway.v1.schemas.device_schema import DeviceSchema
+from src.core.service_gateway.v1.schemas.actuator_creating_schema import (
+    ActuatorCreatingSchema,
+)
+from src.core.service_gateway.v1.schemas.operation_schema import OperationSchema
 
 
 class DeviceRouter:

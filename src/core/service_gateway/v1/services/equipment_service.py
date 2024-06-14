@@ -1,8 +1,10 @@
 from typing import List
 
 from src.core.device_managment.equipment_controller import EquipmentController
-from src.api.v1.schemas.equipment_schema import EquipmentSchema
-from src.api.v1.schemas.equipment_creating_schema import EquipmentCreatingSchema
+from src.core.service_gateway.v1.schemas.equipment_schema import EquipmentSchema
+from src.core.service_gateway.v1.schemas.equipment_creating_schema import (
+    EquipmentCreatingSchema,
+)
 
 
 class EquipmentService:

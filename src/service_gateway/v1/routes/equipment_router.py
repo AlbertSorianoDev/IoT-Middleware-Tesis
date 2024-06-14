@@ -3,9 +3,11 @@ from fastapi.responses import JSONResponse
 from uuid import UUID
 from typing import List
 
-from src.api.v1.services.equipment_service import EquipmentService
-from src.api.v1.schemas.equipment_schema import EquipmentSchema
-from src.api.v1.schemas.equipment_creating_schema import EquipmentCreatingSchema
+from src.core.service_gateway.v1.services.equipment_service import EquipmentService
+from src.core.service_gateway.v1.schemas.equipment_schema import EquipmentSchema
+from src.core.service_gateway.v1.schemas.equipment_creating_schema import (
+    EquipmentCreatingSchema,
+)
 
 
 class EquipmentRouter:

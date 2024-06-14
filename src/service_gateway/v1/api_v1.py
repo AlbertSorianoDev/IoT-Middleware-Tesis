@@ -1,9 +1,9 @@
 from fastapi import FastAPI
 from fastapi.responses import JSONResponse
 
-from src.api.v1.routes.equipment_router import EquipmentRouter
-from src.api.v1.routes.device_router import DeviceRouter
-from src.api.v1.routes.plugin_router import PluginRouter
+from src.core.service_gateway.v1.routes.equipment_router import EquipmentRouter
+from src.core.service_gateway.v1.routes.device_router import DeviceRouter
+from src.core.service_gateway.v1.routes.plugin_router import PluginRouter
 
 
 class APIV1:
