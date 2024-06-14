@@ -4,7 +4,7 @@ import importlib.util
 from typing import List, Dict
 
 from src.core.plugin_manager.plugin import Plugin
-from src.core.actuator_manager.actuator import Actuator
+from src.core.actuator_managment.actuator import Actuator
 
 
 class PluginLoader:

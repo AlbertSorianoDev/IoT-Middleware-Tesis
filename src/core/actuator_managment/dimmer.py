@@ -1,6 +1,6 @@
 from typing import Any, Dict
 
-from src.core.actuator_manager.actuator import Actuator
+from src.core.actuator_managment.actuator import Actuator
 from src.common.plugin_interfaces.dimmer_plugin_interface import DimmerPluginInterface
 from src.common.property_manager.property import Property
 
