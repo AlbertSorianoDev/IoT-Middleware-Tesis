@@ -1,4 +1,4 @@
-from src.core.life_cicle.application import Application
+from src.core.application_managment.application import Application
 
 app = Application().app
 
