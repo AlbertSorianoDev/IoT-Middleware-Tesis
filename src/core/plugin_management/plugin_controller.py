@@ -20,7 +20,7 @@ class PluginController(metaclass=SingletonMeta):
 
         self.actuator_factory = ActuatorFactory()
 
-        self._inicialize_plugins_type_index()
+        self._initialize_plugins_type_index()
         self.load_plugins()
 
     def _convert_path_to_module(self, path: str):
@@ -34,7 +34,7 @@ class PluginController(metaclass=SingletonMeta):
 
         return module_path
 
-    def _inicialize_plugins_type_index(self):
+    def _initialize_plugins_type_index(self):
 
         for actuator_subclass in self.actuator_factory.actuator_classes.values():
             self.plugin_interfaces.append(actuator_subclass.PLUGIN_INTERFACE)
