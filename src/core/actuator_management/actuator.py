@@ -1,6 +1,7 @@
 from typing import Any, Dict
 
 from src.core.device_management.device import Device
+from src.core.access_gateway.channel import Channel
 from src.common.plugin_interfaces.actuator_plugin_interface import (
     ActuatorPluginInterface,
 )
@@ -29,6 +30,7 @@ class Actuator(Device):
         brand: str = None,
         model: str = None,
         config_params: Dict[str, Any] = None,
+        channel: Channel,
     ):
         super().__init__(
             label=label,
@@ -37,6 +39,7 @@ class Actuator(Device):
             brand=brand,
             model=model,
             config_params=config_params,
+            channel=channel,
         )
 
         self.on_value = None

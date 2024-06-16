@@ -15,6 +15,20 @@ class PluginRouter:
 
         return JSONResponse(content=plugins, status_code=200)
 
+    @plugin_router.get("s/sensor", response_model=List[str])
+    async def get_sensor_plugins():
+        service = PluginService()
+        plugins = service.get_sensor_plugin_names()
+
+        return JSONResponse(content=plugins, status_code=200)
+
+    @plugin_router.get("s/channel", response_model=List[str])
+    async def get_channel_plugins():
+        service = PluginService()
+        plugins = service.get_channel_plugin_names()
+
+        return JSONResponse(content=plugins, status_code=200)
+
     @plugin_router.get("/config_params", response_model=Dict[str, str])
     async def get_plugin_configuration_params(plugin_name: str):
         service = PluginService()

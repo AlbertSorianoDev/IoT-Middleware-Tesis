@@ -6,6 +6,8 @@ from typing import List, Dict
 from src.core.plugin_management.plugin import Plugin
 from src.core.actuator_management.actuator_factory import ActuatorFactory
 from src.core.utils.singleton import SingletonMeta
+from src.common.plugin_interfaces.sensor_plugin_interface import SensorPluginInterface
+from src.common.plugin_interfaces.channel_plugin_interface import ChannelPluginInterface
 
 
 class PluginController(metaclass=SingletonMeta):
@@ -13,7 +15,10 @@ class PluginController(metaclass=SingletonMeta):
         self.plugins_type_index: Dict[str, List[Plugin]] = {}
         self.plugins_class_index: Dict[str, Plugin] = {}
         self.plugin_interfaces_index: Dict[str, type] = {}
-        self.plugin_interfaces: List[type] = []
+        self.plugin_interfaces: List[type] = [
+            ChannelPluginInterface,
+            SensorPluginInterface,
+        ]
 
         self.plugins_folder: str = plugin_path
         self.plugins_root_module = self._convert_path_to_module(self.plugins_folder)
@@ -68,6 +73,10 @@ class PluginController(metaclass=SingletonMeta):
                                 issubclass(attribute, interface_class)
                                 and attribute is not interface_class
                             ):
+
+                                if self.plugins_class_index.get(attribute.__name__):
+                                    break
+
                                 new_plugin = Plugin(
                                     cls_name=attribute.__name__,
                                     module_name=module_name,

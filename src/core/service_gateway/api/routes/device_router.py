@@ -9,6 +9,10 @@ from src.core.service_gateway.api.schemas.actuator_creating_schema import (
     ActuatorCreatingSchema,
 )
 from src.core.service_gateway.api.schemas.operation_schema import OperationSchema
+from src.core.service_gateway.api.schemas.sensor_creating_schema import (
+    SensorCreatingSchema,
+)
+from src.core.service_gateway.api.schemas.sensor_states_schema import SensorStatesSchema
 
 
 class DeviceRouter:
@@ -79,9 +83,33 @@ class DeviceRouter:
 
         if operation_result:
             return JSONResponse(
-                content={"operation_realice": operation_result}, status_code=200
+                content={"operation_realize": operation_result}, status_code=200
             )
         else:
             return JSONResponse(
                 content={"message": "Error doing operation"}, status_code=500
+            )
+
+    @device_router.post("/sensor", response_model=DeviceSchema)
+    async def create_sensor(sensor_create: SensorCreatingSchema):
+        service = DeviceService()
+        sensor_data = service.create_sensor(sensor_create)
+
+        if sensor_data:
+            return JSONResponse(content=sensor_data, status_code=200)
+        else:
+            return JSONResponse(
+                content={"message": "Error creating sensor"}, status_code=500
+            )
+
+    @device_router.get("/sensor/{sensor_id}/states", response_model=SensorStatesSchema)
+    async def get_sensor_states(sensor_id: UUID):
+        service = DeviceService()
+        sensor_states_data = service.get_sensor_states(sensor_id)
+
+        if sensor_states_data:
+            return JSONResponse(content=sensor_states_data, status_code=200)
+        else:
+            return JSONResponse(
+                content={"message": "Sensor not found"}, status_code=404
             )

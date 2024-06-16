@@ -7,6 +7,10 @@ from src.core.service_gateway.api.schemas.actuator_creating_schema import (
     ActuatorCreatingSchema,
 )
 from src.core.service_gateway.api.schemas.operation_schema import OperationSchema
+from src.core.service_gateway.api.schemas.sensor_creating_schema import (
+    SensorCreatingSchema,
+)
+from src.core.service_gateway.api.schemas.sensor_states_schema import SensorStatesSchema
 
 
 class DeviceService:
@@ -14,20 +18,22 @@ class DeviceService:
         self.equipment_control = EquipmentController()
 
     def get_device_by_id(self, actuator_id: UUID) -> DeviceSchema | None:
-        actuator = self.equipment_control.get_device_by_id(actuator_id)
+        device = self.equipment_control.get_device_by_id(actuator_id)
 
-        if actuator:
-            return actuator.to_dict()
+        if device:
+            return device.to_dict()
 
         return None
 
     def get_devices_by_equipment_id(self, equipment_id: UUID) -> List[DeviceSchema]:
         equipment = self.equipment_control.get_equipment_by_id(equipment_id)
-        # TODO: Add validation for equipment not found
 
-        actuators = equipment.devices
+        if not equipment:
+            return []
 
-        return [actuator.to_dict() for actuator in actuators]
+        devices = equipment.devices
+
+        return [device.to_dict() for device in devices]
 
     def get_actuator_types(self) -> List[str]:
         return list(self.equipment_control.actuator_factory.actuator_classes.keys())
@@ -56,3 +62,19 @@ class DeviceService:
         )
 
         return operation_result
+
+    def create_sensor(self, sensor_create: SensorCreatingSchema) -> DeviceSchema | None:
+        sensor = self.equipment_control.create_sensor(**sensor_create.model_dump())
+
+        if sensor:
+            return sensor.to_dict()
+
+        return None
+
+    def get_sensor_states(self, sensor_id: UUID) -> SensorStatesSchema | None:
+        sensor = self.equipment_control.get_device_by_id(sensor_id)
+
+        if sensor:
+            return sensor.states
+
+        return None

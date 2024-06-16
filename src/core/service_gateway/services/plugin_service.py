@@ -22,6 +22,16 @@ class PluginService:
         )
         return plugins
 
+    def get_sensor_plugin_names(self) -> List[str]:
+        return self.plugin_controller.get_plugin_names_by_interface_name(
+            "SensorPluginInterface"
+        )
+
+    def get_channel_plugin_names(self) -> List[str]:
+        return self.plugin_controller.get_plugin_names_by_interface_name(
+            "ChannelPluginInterface"
+        )
+
     def get_plugin_configuration_params(self, plugin_name: str) -> Dict[str, str]:
         plugin = self.plugin_controller.get_plugin_by_class_name(plugin_name)
         return plugin.params

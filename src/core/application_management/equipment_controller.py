@@ -6,11 +6,14 @@ from src.core.plugin_management.plugin_controller import PluginController
 from src.core.utils.singleton import SingletonMeta
 from src.core.device_management.equipment import Equipment, Device
 from src.core.actuator_management.actuator import Actuator
+from src.core.device_management.sensor import Sensor
 from src.core.actuator_management.actuator_factory import ActuatorFactory
+from src.core.access_gateway.channel import Channel
 
 
 class EquipmentController(metaclass=SingletonMeta):
     def __init__(self):
+        self.channels_index: Dict[UUID, Equipment] = {}
         self.equipments_index: Dict[UUID, Equipment] = {}
         self.devices_index: Dict[UUID, Device] = {}
 
@@ -27,8 +30,37 @@ class EquipmentController(metaclass=SingletonMeta):
     def plugin_controller(self, value):
         self._plugin_controller = value
 
-    def create_equipment(self, label: str, description: str):
-        new_equipment = Equipment(label=label, description=description)
+    def create_channel(
+        self,
+        *,
+        label: str,
+        description: str,
+        plugin_class_name: str,
+        config_params: Dict[str, str],
+    ) -> Channel:
+        plugin = self.plugin_controller.get_plugin_by_class_name(plugin_class_name)
+
+        if not plugin:
+            raise ValueError(f"Plugin {plugin_class_name} not found")
+
+        new_channel = Channel(
+            label=label,
+            description=description,
+            plugin_class=plugin.cls,
+            config_params=config_params,
+        )
+
+        self.channels_index[new_channel.id] = new_channel
+
+        return new_channel
+
+    def create_equipment(self, label: str, description: str, channel_id: UUID):
+        channel = self.channels_index.get(channel_id)
+
+        if not channel:
+            raise ValueError(f"Channel {channel_id} not found")
+
+        new_equipment = Equipment(label=label, description=description, channel=channel)
         self.equipments_index[new_equipment.id] = new_equipment
 
         return new_equipment
@@ -63,12 +95,50 @@ class EquipmentController(metaclass=SingletonMeta):
             brand=brand,
             model=model,
             config_params=config_params,
+            channel=equipment.channel,
         )
 
         equipment.add_device(new_actuator)
         self.devices_index[new_actuator.id] = new_actuator
 
         return new_actuator
+
+    def create_sensor(
+        self,
+        *,
+        equipment_id: UUID,
+        label: str,
+        description: str,
+        plugin_class_name: str,
+        brand: str = None,
+        model: str = None,
+        config_params: Dict[str, Any] = None,
+    ) -> Sensor:
+
+        equipment = self.equipments_index.get(equipment_id)
+
+        if not equipment:
+            raise ValueError(f"Equipment {equipment_id} not found")
+
+        plugin = self.plugin_controller.get_plugin_by_class_name(plugin_class_name)
+
+        if not plugin:
+            raise ValueError(f"Plugin {plugin_class_name} not found")
+
+        new_sensor = Sensor(
+            label=label,
+            description=description,
+            brand=brand,
+            model=model,
+            plugin_class=plugin.cls,
+            config_params=config_params,
+            channel=equipment.channel,
+        )
+
+        equipment.add_device(new_sensor)
+        self.devices_index[new_sensor.id] = new_sensor
+
+        return new_sensor
 
     def get_equipment_by_id(self, equipment_id: UUID):
         return self.equipments_index.get(equipment_id)

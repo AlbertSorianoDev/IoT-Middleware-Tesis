@@ -26,11 +26,11 @@ class EquipmentService:
         ]
 
     def create_equipment(self, equipment_create: EquipmentCreatingSchema):
-        equipement = self.equipment_control.create_equipment(
+        equipment = self.equipment_control.create_equipment(
             **equipment_create.model_dump()
         )
 
-        if equipement:
-            return equipement.to_dict()
+        if equipment:
+            return equipment.to_dict()
 
         return None

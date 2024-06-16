@@ -9,7 +9,10 @@ class NumericData(DataType):
         if isinstance(value, (int, float, type(None))):
             self.value = value
         else:
-            raise ValueError("Invalid value for NumericData")
+            try:
+                self.value = float(value)
+            except ValueError:
+                raise ValueError("Invalid value for NumericData")
 
     def get_value(self) -> int | float | None:
         return self.value
