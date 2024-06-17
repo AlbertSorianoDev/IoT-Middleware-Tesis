@@ -12,7 +12,6 @@ class RuleRouter:
     rule_router = APIRouter(prefix="/rule", tags=["Rule"])
 
     @rule_router.get("/{rule_id}", response_model=RuleSchema)
-    @staticmethod
     async def get_rule_by_id(rule_id: UUID):
         rule_data = {
             "id": rule_id,
@@ -27,7 +26,6 @@ class RuleRouter:
             return JSONResponse(content={"message": "Rule not found"}, status_code=404)
 
     @rule_router.get("s", response_model=List[RuleSchema])
-    @staticmethod
     async def get_rules():
         rule_data = [
             {
@@ -47,12 +45,14 @@ class RuleRouter:
         return JSONResponse(content=rule_data, status_code=200)
 
     @rule_router.post("", response_model=RuleSchema)
-    @staticmethod
     async def create_rule(rule_create: RuleCreatingSchema):
         rule_data = {
-            "id": uuid4(),
+            "id": str(uuid4()),
             **rule_create.model_dump(),
         }
+
+        rule_data["trigger_device_id"] = rule_data["trigger_device_id"].__str__()
+        rule_data["affected_device_id"] = rule_data["affected_device_id"].__str__()
 
         if rule_data:
             return JSONResponse(content=rule_data, status_code=200)
@@ -62,7 +62,6 @@ class RuleRouter:
             )
 
     @rule_router.delete("")
-    @staticmethod
     async def delete_rule(rule_id: UUID):
 
         if True:

@@ -9,6 +9,7 @@ class RuleCreatingSchema(BaseModel):
     trigger_device_id: UUID
     trigger_state: str
     condition: str
+    value: str | int | float | bool
     affected_device_id: UUID
     affected_command: str
     command_params: Dict[str, str | int | float | bool]

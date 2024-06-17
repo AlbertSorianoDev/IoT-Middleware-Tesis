@@ -14,7 +14,6 @@ class ApplicationRouter:
     application_router = APIRouter(prefix="/application", tags=["Application"])
 
     @application_router.post("", response_model=ApplicationSchema)
-    @staticmethod
     async def create_application(application_create: ApplicationCreatingSchema):
         application_data = {
             "id": uuid4(),
@@ -33,7 +32,6 @@ class ApplicationRouter:
     @application_router.get(
         "/application_id/credentials", response_model=CredentialsSchema
     )
-    @staticmethod
     async def get_application_credentials(application_id: UUID):
         application_data = {
             "api_key": "api_key",
@@ -48,7 +46,6 @@ class ApplicationRouter:
             )
 
     @application_router.delete("")
-    @staticmethod
     async def delete_application(application_id: UUID):
 
         if True:

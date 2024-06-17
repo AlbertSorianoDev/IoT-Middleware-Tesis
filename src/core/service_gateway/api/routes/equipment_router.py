@@ -14,7 +14,6 @@ class EquipmentRouter:
     equipment_router = APIRouter(prefix="/equipment", tags=["Equipment"])
 
     @equipment_router.get("/{equipment_id}", response_model=EquipmentSchema)
-    @staticmethod
     async def get_equipment_by_id(equipment_id: UUID):
         service = EquipmentService()
         equipment = service.get_equipment_by_id(equipment_id)
@@ -27,7 +26,6 @@ class EquipmentRouter:
             )
 
     @equipment_router.get("s", response_model=List[EquipmentSchema])
-    @staticmethod
     async def get_equipments():
         service = EquipmentService()
         equipments = service.get_equipments()
@@ -35,7 +33,6 @@ class EquipmentRouter:
         return JSONResponse(content=equipments, status_code=200)
 
     @equipment_router.post("")
-    @staticmethod
     async def create_equipment(equipment_create: EquipmentCreatingSchema):
         service = EquipmentService()
         equipment = service.create_equipment(equipment_create)
@@ -49,7 +46,6 @@ class EquipmentRouter:
 
     # TODO: Implement update_equipment method
     @equipment_router.put("/{equipment_id}")
-    @staticmethod
     async def update_equipment(
         equipment_id: UUID, equipment_update: EquipmentCreatingSchema
     ):
@@ -67,7 +63,6 @@ class EquipmentRouter:
 
     # TODO: Implement delete_equipment method
     @equipment_router.delete("/{equipment_id}")
-    @staticmethod
     async def delete_equipment(equipment_id: UUID):
         if True:
             return JSONResponse(

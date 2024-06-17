@@ -15,7 +15,6 @@ class ChannelRouter:
     channel_router = APIRouter(prefix="/channel", tags=["Channel"])
 
     @channel_router.get("/{channel_id}", response_model=ChannelSchema)
-    @staticmethod
     async def get_channel_by_id(channel_id: UUID):
         service = ChannelService()
         channel_data = service.get_channel_by_id(channel_id)
@@ -28,7 +27,6 @@ class ChannelRouter:
             )
 
     @channel_router.get("s", response_model=List[ChannelSchema])
-    @staticmethod
     async def get_channels():
         service = ChannelService()
         channels_data = service.get_channels()
@@ -36,8 +34,7 @@ class ChannelRouter:
         return JSONResponse(content=channels_data, status_code=200)
 
     @channel_router.post("", response_model=ChannelSchema)
-    @staticmethod
-    async def create_equipment(channel_create: ChannelCreatingSchema):
+    async def create_channel(channel_create: ChannelCreatingSchema):
         service = ChannelService()
         channel_data = service.create_channel(channel_create)
 
@@ -50,7 +47,6 @@ class ChannelRouter:
 
     # TODO: Implement update_channel method
     @channel_router.put("/{channel_id}")
-    @staticmethod
     async def update_channel(channel_id: UUID, channel_update: ChannelCreatingSchema):
         channel_data = {
             "id": channel_id,
@@ -66,7 +62,6 @@ class ChannelRouter:
 
     # TODO: Implement delete_channel method
     @channel_router.delete("/{channel_id}")
-    @staticmethod
     async def delete_channel(channel_id: UUID):
         if True:
             return JSONResponse(content={"message": "Channel Deleted"}, status_code=200)

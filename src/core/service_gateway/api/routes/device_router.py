@@ -3,6 +3,7 @@ from fastapi.responses import JSONResponse
 from uuid import UUID
 from typing import List, Dict
 
+from src.core.device_management import equipment
 from src.core.service_gateway.services.device_service import DeviceService
 from src.core.service_gateway.api.schemas.device_schema import DeviceSchema
 from src.core.service_gateway.api.schemas.actuator_creating_schema import (
@@ -19,7 +20,6 @@ class DeviceRouter:
     device_router = APIRouter(prefix="/device", tags=["Device"])
 
     @device_router.get("/{device_id}", response_model=DeviceSchema | None)
-    @staticmethod
     async def get_device_by_id(device_id: UUID):
         service = DeviceService()
         device_data = service.get_device_by_id(device_id)
@@ -32,7 +32,6 @@ class DeviceRouter:
             )
 
     @device_router.get("s/{equipment_id}", response_model=List[DeviceSchema])
-    @staticmethod
     async def get_devices_by_equipment_id(equipment_id: UUID):
         service = DeviceService()
         devices_data = service.get_devices_by_equipment_id(equipment_id)
@@ -40,7 +39,6 @@ class DeviceRouter:
         return JSONResponse(content=devices_data, status_code=200)
 
     @device_router.get("/actuator/types", response_model=List[str])
-    @staticmethod
     async def get_actuator_types():
         service = DeviceService()
         actuator_types = service.get_actuator_types()
@@ -48,7 +46,6 @@ class DeviceRouter:
         return JSONResponse(content=actuator_types, status_code=200)
 
     @device_router.post("/actuator", response_model=DeviceSchema | None)
-    @staticmethod
     async def create_actuator(
         actuator_create: ActuatorCreatingSchema,
     ):
@@ -65,7 +62,6 @@ class DeviceRouter:
     @device_router.get(
         "/actuator/{actuator_type}/operations", response_model=Dict[str, Dict[str, str]]
     )
-    @staticmethod
     async def get_operations_by_actuator_type(actuator_type: str):
         service = DeviceService()
         actuator_operations_data = service.get_operations_by_actuator_type(
@@ -82,7 +78,6 @@ class DeviceRouter:
     @device_router.post(
         "/actuator/{actuator_id}/operate", response_model=Dict[str, str]
     )
-    @staticmethod
     async def do_an_operation_by_actuator_id(operation_data: OperationSchema):
         service = DeviceService()
         operation_result = service.do_an_operation_by_actuator_id(operation_data)
@@ -98,7 +93,6 @@ class DeviceRouter:
 
     # TODO: Implement subscribe to actuator state changes
     @device_router.post("/actuator/subscribe")
-    @staticmethod
     async def subscribe_to_actuator_state_changes(actuator_id: UUID, state_name: str):
 
         if True:
@@ -109,14 +103,15 @@ class DeviceRouter:
 
     # TODO: Implement update_actuator method
     @device_router.put("/actuator/{actuator_id}")
-    @staticmethod
     async def update_actuator(
         actuator_id: UUID, actuator_update: ActuatorCreatingSchema
     ):
         actuator_data = {
-            "id": actuator_id,
+            "id": str(actuator_id),
             **actuator_update.model_dump(),
         }
+
+        actuator_data["equipment_id"] = actuator_data["equipment_id"].__str__()
 
         if actuator_data:
             return JSONResponse(content=actuator_data, status_code=200)
@@ -127,7 +122,6 @@ class DeviceRouter:
 
     # TODO: Implement delete_actuator method
     @device_router.delete("/actuator/{actuator_id}")
-    @staticmethod
     async def delete_actuator(actuator_id: UUID):
         if True:
             return JSONResponse(
@@ -139,7 +133,6 @@ class DeviceRouter:
             )
 
     @device_router.post("/sensor", response_model=DeviceSchema)
-    @staticmethod
     async def create_sensor(sensor_create: SensorCreatingSchema):
         service = DeviceService()
         sensor_data = service.create_sensor(sensor_create)
@@ -152,7 +145,6 @@ class DeviceRouter:
             )
 
     @device_router.get("/sensor/{sensor_id}/states", response_model=SensorStatesSchema)
-    @staticmethod
     async def get_sensor_states(sensor_id: UUID):
         service = DeviceService()
         sensor_states_data = service.get_sensor_states(sensor_id)
@@ -166,7 +158,6 @@ class DeviceRouter:
 
     # TODO: Implement subscribe to sensor state changes
     @device_router.post("/sensor/subscribe")
-    @staticmethod
     async def subscribe_to_sensor_state_changes(sensor_id: UUID, state_name: str):
 
         if True:
@@ -177,7 +168,6 @@ class DeviceRouter:
 
     # TODO: Implement update_sensor method
     @device_router.put("/sensor/{sensor_id}")
-    @staticmethod
     async def update_sensor(sensor_id: UUID, sensor_update: SensorCreatingSchema):
         sensor_data = {
             "id": sensor_id,
@@ -193,7 +183,6 @@ class DeviceRouter:
 
     # TODO: Implement delete_sensor method
     @device_router.delete("/sensor/{sensor_id}")
-    @staticmethod
     async def delete_sensor(sensor_id: UUID):
         if True:
             return JSONResponse(content={"message": "Sensor Deleted"}, status_code=200)
