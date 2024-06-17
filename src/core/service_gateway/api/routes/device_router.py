@@ -19,6 +19,7 @@ class DeviceRouter:
     device_router = APIRouter(prefix="/device", tags=["Device"])
 
     @device_router.get("/{device_id}", response_model=DeviceSchema | None)
+    @staticmethod
     async def get_device_by_id(device_id: UUID):
         service = DeviceService()
         device_data = service.get_device_by_id(device_id)
@@ -31,6 +32,7 @@ class DeviceRouter:
             )
 
     @device_router.get("s/{equipment_id}", response_model=List[DeviceSchema])
+    @staticmethod
     async def get_devices_by_equipment_id(equipment_id: UUID):
         service = DeviceService()
         devices_data = service.get_devices_by_equipment_id(equipment_id)
@@ -38,6 +40,7 @@ class DeviceRouter:
         return JSONResponse(content=devices_data, status_code=200)
 
     @device_router.get("/actuator/types", response_model=List[str])
+    @staticmethod
     async def get_actuator_types():
         service = DeviceService()
         actuator_types = service.get_actuator_types()
@@ -45,6 +48,7 @@ class DeviceRouter:
         return JSONResponse(content=actuator_types, status_code=200)
 
     @device_router.post("/actuator", response_model=DeviceSchema | None)
+    @staticmethod
     async def create_actuator(
         actuator_create: ActuatorCreatingSchema,
     ):
@@ -61,6 +65,7 @@ class DeviceRouter:
     @device_router.get(
         "/actuator/{actuator_type}/operations", response_model=Dict[str, Dict[str, str]]
     )
+    @staticmethod
     async def get_operations_by_actuator_type(actuator_type: str):
         service = DeviceService()
         actuator_operations_data = service.get_operations_by_actuator_type(
@@ -77,6 +82,7 @@ class DeviceRouter:
     @device_router.post(
         "/actuator/{actuator_id}/operate", response_model=Dict[str, str]
     )
+    @staticmethod
     async def do_an_operation_by_actuator_id(operation_data: OperationSchema):
         service = DeviceService()
         operation_result = service.do_an_operation_by_actuator_id(operation_data)
@@ -90,7 +96,50 @@ class DeviceRouter:
                 content={"message": "Error doing operation"}, status_code=500
             )
 
+    # TODO: Implement subscribe to actuator state changes
+    @device_router.post("/actuator/subscribe")
+    @staticmethod
+    async def subscribe_to_actuator_state_changes(actuator_id: UUID, state_name: str):
+
+        if True:
+            return JSONResponse(
+                content={"message": "Subscribed to actuator state changes"},
+                status_code=200,
+            )
+
+    # TODO: Implement update_actuator method
+    @device_router.put("/actuator/{actuator_id}")
+    @staticmethod
+    async def update_actuator(
+        actuator_id: UUID, actuator_update: ActuatorCreatingSchema
+    ):
+        actuator_data = {
+            "id": actuator_id,
+            **actuator_update.model_dump(),
+        }
+
+        if actuator_data:
+            return JSONResponse(content=actuator_data, status_code=200)
+        else:
+            return JSONResponse(
+                content={"message": "Error updating actuator"}, status_code=500
+            )
+
+    # TODO: Implement delete_actuator method
+    @device_router.delete("/actuator/{actuator_id}")
+    @staticmethod
+    async def delete_actuator(actuator_id: UUID):
+        if True:
+            return JSONResponse(
+                content={"message": "Actuator Deleted"}, status_code=200
+            )
+        else:
+            return JSONResponse(
+                content={"message": "Error deleting actuator"}, status_code=500
+            )
+
     @device_router.post("/sensor", response_model=DeviceSchema)
+    @staticmethod
     async def create_sensor(sensor_create: SensorCreatingSchema):
         service = DeviceService()
         sensor_data = service.create_sensor(sensor_create)
@@ -103,6 +152,7 @@ class DeviceRouter:
             )
 
     @device_router.get("/sensor/{sensor_id}/states", response_model=SensorStatesSchema)
+    @staticmethod
     async def get_sensor_states(sensor_id: UUID):
         service = DeviceService()
         sensor_states_data = service.get_sensor_states(sensor_id)
@@ -112,4 +162,42 @@ class DeviceRouter:
         else:
             return JSONResponse(
                 content={"message": "Sensor not found"}, status_code=404
+            )
+
+    # TODO: Implement subscribe to sensor state changes
+    @device_router.post("/sensor/subscribe")
+    @staticmethod
+    async def subscribe_to_sensor_state_changes(sensor_id: UUID, state_name: str):
+
+        if True:
+            return JSONResponse(
+                content={"message": "Subscribed to sensor state changes"},
+                status_code=200,
+            )
+
+    # TODO: Implement update_sensor method
+    @device_router.put("/sensor/{sensor_id}")
+    @staticmethod
+    async def update_sensor(sensor_id: UUID, sensor_update: SensorCreatingSchema):
+        sensor_data = {
+            "id": sensor_id,
+            **sensor_update.model_dump(),
+        }
+
+        if sensor_data:
+            return JSONResponse(content=sensor_data, status_code=200)
+        else:
+            return JSONResponse(
+                content={"message": "Error updating sensor"}, status_code=500
+            )
+
+    # TODO: Implement delete_sensor method
+    @device_router.delete("/sensor/{sensor_id}")
+    @staticmethod
+    async def delete_sensor(sensor_id: UUID):
+        if True:
+            return JSONResponse(content={"message": "Sensor Deleted"}, status_code=200)
+        else:
+            return JSONResponse(
+                content={"message": "Error deleting sensor"}, status_code=500
             )
