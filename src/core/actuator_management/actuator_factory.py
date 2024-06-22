@@ -21,7 +21,7 @@ class ActuatorFactory:
         brand: str = None,
         model: str = None,
         config_params: Dict[str, Any] = None,
-        channel: Channel,
+        channel: Channel = None,
     ):
         if actuator_type in self.actuator_classes:
             return self.actuator_classes[actuator_type](

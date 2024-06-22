@@ -43,3 +43,32 @@ class EquipmentRouter:
             return JSONResponse(
                 content={"message": "Error creating equipment"}, status_code=500
             )
+
+    # TODO: Implement update_equipment method
+    @equipment_router.put("/{equipment_id}")
+    async def update_equipment(
+        equipment_id: UUID, equipment_update: EquipmentCreatingSchema
+    ):
+        equipment_data = {
+            "id": equipment_id,
+            **equipment_update.model_dump(),
+        }
+
+        if equipment_data:
+            return JSONResponse(content=equipment_data, status_code=200)
+        else:
+            return JSONResponse(
+                content={"message": "Error updating equipment"}, status_code=500
+            )
+
+    # TODO: Implement delete_equipment method
+    @equipment_router.delete("/{equipment_id}")
+    async def delete_equipment(equipment_id: UUID):
+        if True:
+            return JSONResponse(
+                content={"message": "Equipment deleted"}, status_code=200
+            )
+        else:
+            return JSONResponse(
+                content={"message": "Error deleting equipment"}, status_code=500
+            )

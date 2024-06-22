@@ -30,7 +30,7 @@ class Actuator(Device):
         brand: str = None,
         model: str = None,
         config_params: Dict[str, Any] = None,
-        channel: Channel,
+        channel: Channel = None,
     ):
         super().__init__(
             label=label,

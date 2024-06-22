@@ -3,6 +3,7 @@ from fastapi.responses import JSONResponse
 from uuid import UUID
 from typing import List, Dict
 
+from src.core.device_management import equipment
 from src.core.service_gateway.services.device_service import DeviceService
 from src.core.service_gateway.api.schemas.device_schema import DeviceSchema
 from src.core.service_gateway.api.schemas.actuator_creating_schema import (
@@ -90,6 +91,47 @@ class DeviceRouter:
                 content={"message": "Error doing operation"}, status_code=500
             )
 
+    # TODO: Implement subscribe to actuator state changes
+    @device_router.post("/actuator/subscribe")
+    async def subscribe_to_actuator_state_changes(actuator_id: UUID, state_name: str):
+
+        if True:
+            return JSONResponse(
+                content={"message": "Subscribed to actuator state changes"},
+                status_code=200,
+            )
+
+    # TODO: Implement update_actuator method
+    @device_router.put("/actuator/{actuator_id}")
+    async def update_actuator(
+        actuator_id: UUID, actuator_update: ActuatorCreatingSchema
+    ):
+        actuator_data = {
+            "id": str(actuator_id),
+            **actuator_update.model_dump(),
+        }
+
+        actuator_data["equipment_id"] = actuator_data["equipment_id"].__str__()
+
+        if actuator_data:
+            return JSONResponse(content=actuator_data, status_code=200)
+        else:
+            return JSONResponse(
+                content={"message": "Error updating actuator"}, status_code=500
+            )
+
+    # TODO: Implement delete_actuator method
+    @device_router.delete("/actuator/{actuator_id}")
+    async def delete_actuator(actuator_id: UUID):
+        if True:
+            return JSONResponse(
+                content={"message": "Actuator Deleted"}, status_code=200
+            )
+        else:
+            return JSONResponse(
+                content={"message": "Error deleting actuator"}, status_code=500
+            )
+
     @device_router.post("/sensor", response_model=DeviceSchema)
     async def create_sensor(sensor_create: SensorCreatingSchema):
         service = DeviceService()
@@ -112,4 +154,39 @@ class DeviceRouter:
         else:
             return JSONResponse(
                 content={"message": "Sensor not found"}, status_code=404
+            )
+
+    # TODO: Implement subscribe to sensor state changes
+    @device_router.post("/sensor/subscribe")
+    async def subscribe_to_sensor_state_changes(sensor_id: UUID, state_name: str):
+
+        if True:
+            return JSONResponse(
+                content={"message": "Subscribed to sensor state changes"},
+                status_code=200,
+            )
+
+    # TODO: Implement update_sensor method
+    @device_router.put("/sensor/{sensor_id}")
+    async def update_sensor(sensor_id: UUID, sensor_update: SensorCreatingSchema):
+        sensor_data = {
+            "id": sensor_id,
+            **sensor_update.model_dump(),
+        }
+
+        if sensor_data:
+            return JSONResponse(content=sensor_data, status_code=200)
+        else:
+            return JSONResponse(
+                content={"message": "Error updating sensor"}, status_code=500
+            )
+
+    # TODO: Implement delete_sensor method
+    @device_router.delete("/sensor/{sensor_id}")
+    async def delete_sensor(sensor_id: UUID):
+        if True:
+            return JSONResponse(content={"message": "Sensor Deleted"}, status_code=200)
+        else:
+            return JSONResponse(
+                content={"message": "Error deleting sensor"}, status_code=500
             )
